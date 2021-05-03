@@ -21,6 +21,20 @@ exports.list_all_tasks = function(req, res) {
         mainRes(task,res,0,'success');
     });
   };
+
+  exports.create_a_many = function(req, res){
+    Task.insertMany(req.body, function(err){
+        if (err)
+        res.send(err);
+      res.json({ message: 'Task successfully saved' });
+        // if (err){
+        //     mainRes(err,res,-1,'error');
+        //      // res.send(err);
+        //     }
+              
+              //mainRes(task,res,0,'success');
+    });
+  };
   
   
   
