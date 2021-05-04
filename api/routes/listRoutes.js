@@ -1,6 +1,8 @@
 'use strict';
 module.exports = function(app){
     let todoList = require('../controllers/listController');
+    app.route('/').get((req, res) => res.end('Welcome to my api !'));
+   
     app.route('/tasks')
     .get(todoList.list_all_tasks)
     .post(todoList.create_a_task);
