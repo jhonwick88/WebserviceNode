@@ -14,8 +14,8 @@ function mainRes(data,res,code,msg){
 exports.list_all_tasks = function(req, res) {
     Task.find({}, function(err, task) {
       if (err){
-      mainRes(err,res,-1,'error');
-       // res.send(err);
+     // mainRes(err,res,-1,'error');
+       res.send(err);
       }
         
         mainRes(task,res,0,'success');
