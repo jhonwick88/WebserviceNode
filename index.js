@@ -3,8 +3,10 @@ app = express(),
 port = process.env.PORT || 3000;
 mongoose = require('mongoose'),
 Task = require('./api/models/listModel'); //created model loading here
+Campaign = require('./api/models/campaign');
 bodyParser = require('body-parser');
 const uri = "mongodb+srv://admin:admin@cluster0.lz8m4.mongodb.net/Tododb?retryWrites=true&w=majority";
+
 //const uri = "mongodb://localhost/Tododb";
 // mongoose instance connection url connection
 mongoose.Promise = global.Promise;
