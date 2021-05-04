@@ -23,12 +23,10 @@ let CampaignSchema = new Schema({
         hit: { type: Number }
     },
     createdAt:{
-        type: Date,
-        default: Date.now
+        type: String        
     },
     updateAt:{
-        type: Date,
-        default: Date.now
+        type: String        
     }
 });
 
