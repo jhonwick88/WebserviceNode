@@ -27,6 +27,11 @@ module.exports = (mongoose, moongoPaginate) => {
             type: String        
         }
     });
+    CampaignSchema.method("toJSON", function() {
+        const { __v, _id, ...object } = this.toObject();
+        object.id = _id;
+        return object;
+      });
     CampaignSchema.plugin(moongoPaginate);
     let campaign = mongoose.model('Campaigns', CampaignSchema);
     return campaign;
