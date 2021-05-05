@@ -2,6 +2,7 @@
 module.exports = function(app){
     let todoList = require('../controllers/listController');
     let campaign = require('../controllers/campaignController');
+    let category = require('../controllers/categoryController');
 
     app.route('/').get((req, res) => res.end('Welcome to my api !'));
     app.route('/tasks')
@@ -23,6 +24,12 @@ module.exports = function(app){
     .get(campaign.list_all_campaign);
   app.route('/api/many/campaign').post(campaign.create_many_campaign);
   
+  // category
+  app.route('/api/category')
+    .get(category.list_all_category)
+    .post(category.create_a_category);
+  app.route('/api/many/category').post(category.create_many_category);
+
   app.get('*', (req, res)=>{
     res.status(404).send({url: req.originalUrl + ' not found'})
 })
