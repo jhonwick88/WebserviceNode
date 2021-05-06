@@ -61,6 +61,69 @@ exports.signup = (req, res) => {
     }
   });
 };
+exports.loginSocial = (req, res) => {
+    User.findOne({ 
+        providerId: req.body.providerId
+    }).populate("roles", "-__v")
+    .exec((err, user) => {
+        if (err) {
+            res.status(500).send({ message: err });
+            return;
+          }
+          let userinit = user;
+          if (!userinit) {
+            const usernew = new User({
+                username: req.body.username,
+                email: req.body.email,
+                password: bcrypt.hashSync('12341234', 8), //defaul for sosmed
+                provider: req.body.provider,
+                providerId: req.body.providerId
+              });
+            
+              usernew.save((err, userdata) => {
+                if (err) {
+                  res.status(500).send({ message: err });
+                  return;
+                }
+                Role.findOne({ name: "user" }, (err, role) => {
+                    if (err) {
+                      res.status(500).send({ message: err });
+                      return;
+                    }
+            
+                    userdata.roles = [role._id];
+                    userdata.save(err => {
+                      if (err) {
+                        res.status(500).send({ message: err });
+                        return;
+                      }
+                      userinit = userdata;
+                    });
+                  });
+                
+              });
+          }
+
+          let expiredAt = 86400;
+          var token = jwt.sign({ id: userinit.id }, config.secret, {
+            expiresIn: expiredAt // 24 hours
+          });
+    
+          var authorities = [];
+    
+          for (let i = 0; i < userinit.roles.length; i++) {
+            authorities.push("ROLE_" + userinit.roles[i].name.toUpperCase());
+          }
+          res.status(200).send({
+            id: userinit._id,
+            username: userinit.username,
+            email: userinit.email,
+            roles: authorities,
+            accessToken: token,
+            expiresIn: expiredAt
+          });
+    });
+}
 
 exports.signin = (req, res) => {
   User.findOne({
