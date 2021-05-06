@@ -6,7 +6,7 @@
   "scripts": {
     "test": "npm run dev",
     "start": "node index.js",
-    "start:dev": "nodemon --watch"
+    "start:dev": "nodemon index.js"
   },
   "repository": {
     "type": "git",

@@ -61,7 +61,7 @@ db.mongoose
   })
   .then(() => {
     console.log("Connected to the database!");
-    //createRole();
+    createRole();
   })
   .catch(err => {
     console.log("Cannot connect to the database!", err);
