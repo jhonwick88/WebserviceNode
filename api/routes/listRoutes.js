@@ -41,6 +41,10 @@ module.exports = function(app){
     userAccess.adminBoard
   );
   // end auth
+  // category no token
+  app.route('/api/category')
+    .get(category.list_all_category)
+    .post(category.create_a_category);
 
   app.use(authJwt.verifyToken);
     app.route('/').get((req, res) => res.end('Welcome to my api !'));
@@ -61,12 +65,6 @@ module.exports = function(app){
   // campaign
   app.route('/api/campaign')
     .get(campaign.list_all_campaign);
-
-  // category
-  app.route('/api/category')
-    .get(category.list_all_category)
-    .post(category.create_a_category);
-
 
   app.use([authJwt.verifyToken,authJwt.isAdmin]);
   app.route('/api/many/campaign').post(campaign.create_many_campaign);
